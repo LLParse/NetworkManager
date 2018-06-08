@@ -787,6 +787,9 @@ _output_selection_complete (GArray *cols)
 /**
  * _output_selection_parse:
  * @fields: a %NULL terminated array of meta-data fields
+ * @fields_prefix: optional field prefix. If present, it is assumed that
+ *   @fields_str is specified without this prefix, but when selecting
+ *   the field, the prefix is appended.
  * @fields_str: a comma separated selector for fields. Nested fields
  *   can be specified using '.' notation.
  * @out_cols: (transfer full): the result, parsed as an GArray of PrintDataCol items.
@@ -802,6 +805,7 @@ _output_selection_complete (GArray *cols)
  */
 static gboolean
 _output_selection_parse (const NMMetaAbstractInfo *const*fields,
+                         const char *fields_prefix,
                          const char *fields_str,
                          PrintDataCol **out_cols_data,
                          guint *out_cols_len,
@@ -813,7 +817,11 @@ _output_selection_parse (const NMMetaAbstractInfo *const*fields,
 	gs_unref_array GArray *cols = NULL;
 	guint i;
 
-	selection = nm_meta_selection_create_parse_list (fields, fields_str, FALSE, error);
+	selection = nm_meta_selection_create_parse_list (fields,
+	                                                 fields_prefix,
+	                                                 fields_str,
+	                                                 FALSE,
+	                                                 error);
 	if (!selection)
 		return FALSE;
 
@@ -882,7 +890,7 @@ parse_output_fields (const char *fields_str,
 	g_return_val_if_fail (!error || !*error, NULL);
 	g_return_val_if_fail (!out_group_fields || !*out_group_fields, NULL);
 
-	selection = nm_meta_selection_create_parse_list (fields_array, fields_str, TRUE, error);
+	selection = nm_meta_selection_create_parse_list (fields_array, NULL, fields_str, TRUE, error);
 	if (!selection)
 		return NULL;
 
@@ -1476,6 +1484,7 @@ nmc_print (const NmcConfig *nmc_config,
            gpointer targets_data,
            const char *header_name_no_l10n,
            const NMMetaAbstractInfo *const*fields,
+           const char *fields_prefix,
            const char *fields_str,
            GError **error)
 {
@@ -1486,6 +1495,7 @@ nmc_print (const NmcConfig *nmc_config,
 	gs_unref_array GArray *cells = NULL;
 
 	if (!_output_selection_parse (fields,
+	                              fields_prefix,
 	                              fields_str,
 	                              &cols_data,
 	                              &cols_len,
@@ -1913,4 +1923,3 @@ print_data (const NmcConfig *nmc_config,
 		                       indent, field_values);
 	}
 }
-
