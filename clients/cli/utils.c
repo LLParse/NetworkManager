@@ -730,11 +730,11 @@ _output_selection_append (GArray *cols,
 		nm_assert (selection->num == 1);
 	} else {
 		nested = nm_meta_abstract_info_get_nested (selection_item->info,
-		                                           FALSE,
+		                                           selection_item->selection_type == NM_META_SELECTION_TYPE_ALL,
 		                                           NULL,
 		                                           &nested_to_free);
 		if (nested) {
-			selection = nm_meta_selection_create_all (nested);
+			selection = nm_meta_selection_create_all (nested, selection_item->selection_type);
 			nm_assert (selection && selection->num > 0);
 		} else
 			selection = NULL;
