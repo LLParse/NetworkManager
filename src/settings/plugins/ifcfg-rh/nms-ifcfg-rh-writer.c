@@ -3255,7 +3255,7 @@ nms_ifcfg_rh_writer_write_connection (NMConnection *connection,
 			       svFileGetName (ifcfg), "connection is unhandled");
 		} else {
 			if (out_reread_same) {
-				reread_same = nm_connection_compare (reread, connection, NM_SETTING_COMPARE_FLAG_EXACT);
+				reread_same = nm_connection_compare (reread, connection, NM_SETTING_COMPARE_FLAG_EXACT | NM_SETTING_COMPARE_FLAG_IGNORE_TIMESTAMP);
 				if (!reread_same) {
 					_LOGD ("write: connection %s (%s) was modified by persisting it to \"%s\" ",
 					       nm_connection_get_id (connection),
