@@ -2893,7 +2893,7 @@ nm_setting_ip_config_class_init (NMSettingIPConfigClass *setting_class)
 	g_object_class_install_property
 		(object_class, PROP_DHCP_SEND_HOSTNAME,
 		 g_param_spec_boolean (NM_SETTING_IP_CONFIG_DHCP_SEND_HOSTNAME, "", "",
-		                       TRUE,
+		                       FALSE,
 		                       G_PARAM_READWRITE |
 		                       G_PARAM_CONSTRUCT |
 		                       G_PARAM_STATIC_STRINGS));

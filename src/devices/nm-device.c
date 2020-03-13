@@ -11793,8 +11793,8 @@ _get_cloned_mac_address_setting (NMDevice *self, NMConnection *connection, gbool
 		a = nm_config_data_get_connection_default (NM_CONFIG_GET_DATA,
 		                                           is_wifi ? "wifi.cloned-mac-address" : "ethernet.cloned-mac-address",
 		                                           self);
-		/* default is permanent. */
-		addr = NM_CLONED_MAC_PERMANENT;
+		/* default is random. */
+		addr = NM_CLONED_MAC_RANDOM;
 
 		if (!a) {
 			if (is_wifi) {

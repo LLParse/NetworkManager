@@ -529,6 +529,10 @@ stop (NMDhcpClient *client, gboolean release, const GByteArray *duid)
 		g_free (priv->pid_file);
 		priv->pid_file = NULL;
 	}
+	if (priv->lease_file) {
+		if (remove (priv->lease_file) == -1)
+			_LOGD ("could not remove dhcp lease file \"%s\": %d (%s)", priv->lease_file, errno, g_strerror (errno));
+	}
 
 	if (release) {
 		pid_t rpid = -1;

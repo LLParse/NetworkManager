@@ -2238,7 +2238,7 @@ write_ip4_setting (NMConnection *connection, shvarFile *ifcfg, GError **error)
 		 * in that case, because it is NM-specific variable
 		 */
 		svSetValue (ifcfg, "DHCP_SEND_HOSTNAME",
-		            nm_setting_ip_config_get_dhcp_send_hostname (s_ip4) ? NULL : "no",
+		            "no",
 		            FALSE);
 
 		value = nm_setting_ip4_config_get_dhcp_client_id (NM_SETTING_IP4_CONFIG (s_ip4));
